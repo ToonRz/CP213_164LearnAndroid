@@ -1,25 +1,26 @@
 package com.example.a164_lablearnandriod
 
-import android.content.ClipData
-import android.media.RouteListingPreference
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.a164_lablearnandriod.ui.theme._164_LabLearnAndriodTheme
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 class LstActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +38,25 @@ fun ListScreen() {
         Column(modifier = Modifier.fillMaxSize().background(Color.Gray).padding(16.dp)) {
             LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White).padding(16.dp)) {
                 items(allKantoPokemon){ item ->
-                    Text(text = item.name)
+                    Row() {
+                        Text(text = item.number.toString(), fontSize = 16.sp)
+                        Text(text = item.name)
+
+                        val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/firered-leafgreen/${item.number}.png"
+
+                        AsyncImage(
+                            model = imageUrl,
+                            contentDescription = "Sprite of ${item.name}",
+                            modifier = Modifier.size(64.dp),
+                            placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+                            error = painterResource(id = R.drawable.ic_launcher_background)
+                        )
+                    }
                 }
             }
         }
     }
-
 }
-
 
 data class Pokemon(
     val name: String,
@@ -89,7 +101,6 @@ val allKantoPokemon = listOf(
     Pokemon("Clefairy", 35),
 )
 
-// Tips: for image : https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/firered-leafgreen/1.png
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
