@@ -3,4 +3,7 @@
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_lst">LstActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_shared_preferences_activity.kt">SharedPreferencesActivity.kt
+    </string>
+    <string name="title_activity_shared_preferences">SharedPreferencesActivity</string>
 </resources>

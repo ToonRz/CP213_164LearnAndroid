@@ -40,6 +40,12 @@ android {
 }
 
 dependencies {
+        // Retrofit สำหรับคุยกับ Server
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+        // Converter สำหรับแปลง JSON เป็น Data Class (Gson)
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+        // Lifecycle & ViewModel สำหรับ Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
