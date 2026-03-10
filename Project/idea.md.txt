@@ -1,4 +1,4 @@
-IDEA 1
+-----IDEA 1------
 
 ชื่อโปรเจกต์ (ตุ๊กตา): "MarketWise - Smart Crypto & Stock Analyzer"
 1. Features (ฟีเจอร์หลัก)
