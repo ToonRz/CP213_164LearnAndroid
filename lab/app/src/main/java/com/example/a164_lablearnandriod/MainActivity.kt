@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
 
                 ){
                     Text(
-                        text = "hp",
+                        text = "HP",
                         modifier = Modifier
                             .align(alignment = Alignment.CenterStart)
                             .fillMaxWidth(fraction = 0.64F)
