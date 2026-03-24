@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -52,6 +53,18 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
+            android:theme="@style/Theme._164_LabLearnAndriod" />
+        <!-- Task 1: Camera Permission + TakePicturePreview -->
+        <activity
+            android:name=".CameraActivity"
+            android:exported="false"
+            android:label="Camera Task"
+            android:theme="@style/Theme._164_LabLearnAndriod" />
+        <!-- Task 2/3: Accelerometer via ViewModel + StateFlow -->
+        <activity
+            android:name=".SensorActivity"
+            android:exported="false"
+            android:label="Sensor Task"
             android:theme="@style/Theme._164_LabLearnAndriod" />
     </application>
 
