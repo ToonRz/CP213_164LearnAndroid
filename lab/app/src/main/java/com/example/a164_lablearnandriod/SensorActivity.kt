@@ -5,12 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -18,12 +22,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-// Task 2/3: Activity หลักสำหรับแสดงค่า Accelerometer แบบ Real-time
+/**
+ * SensorActivity — UI Entry Point สำหรับ Task 2/3
+ */
 class SensorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +41,33 @@ class SensorActivity : ComponentActivity() {
     }
 }
 
+/**
+ * SensorScreen — UI Layer (Jetpack Compose)
+ *
+ * หน้าที่: แสดงผลค่าเซ็นเซอร์แบบ Real-time
+ * - รับ SensorViewModel ผ่าน viewModel() helper (Compose สร้างให้อัตโนมัติ)
+ * - ใช้ collectAsState() แปลง StateFlow → Compose State
+ * - ใช้ DisposableEffect จัดการ start/stop ตาม Lifecycle
+ *
+ * ❌ Anti-Pattern: ห้ามใส่ SensorEventListener ไว้ใน Composable!
+ * ✅ ถูกต้อง: Composable รู้จักแค่ ViewModel เท่านั้น
+ */
 @Composable
-fun SensorScreen(sensorViewModel: SensorViewModel = viewModel()) {
-    // collectAsState() แปลง StateFlow -> State ของ Compose
-    // ทุกครั้งที่ StateFlow มีค่าใหม่ Compose จะวาดหน้าจอใหม่อัตโนมัติ
-    val sensorData by sensorViewModel.accelerometerData.collectAsState()
+fun SensorScreen(viewModel: SensorViewModel = viewModel()) {
 
-    // DisposableEffect จัดการ Lifecycle:
-    // - ตอนที่ Composable เข้าสู่หน้าจอ -> startListening()
-    // - ตอนที่ Composable ออกจากหน้าจอ -> stopListening() (via onDispose)
+    // ─────────────────────────────────────────────────────────
+    // collectAsState() = "สมัครรับข่าวสาร" จาก StateFlow
+    // ทุกครั้งที่ SensorTracker อัปเดตค่าใหม่:
+    //   SensorTracker → StateFlow → ViewModel → collectAsState → Recompose!
+    // ─────────────────────────────────────────────────────────
+    val sensorData by viewModel.sensorData.collectAsState()
+
+    // DisposableEffect: รันโค้ดตอนเข้า Composition และ onDispose ตอนออก
+    // ใช้แทน lifecycleObserver ใน Composable — ปลอดภัยและถูกต้อง
     DisposableEffect(Unit) {
-        sensorViewModel.startListening()
+        viewModel.startListening()   // หน้าจอเปิด → เริ่มเซ็นเซอร์
         onDispose {
-            sensorViewModel.stopListening()
+            viewModel.stopListening() // หน้าจอปิด → หยุดเซ็นเซอร์ ประหยัดแบต
         }
     }
 
@@ -56,43 +78,74 @@ fun SensorScreen(sensorViewModel: SensorViewModel = viewModel()) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // ─── Header ───
         Text(
-            text = "Task 2/3: Accelerometer",
+            text = "Task 2/3: Sensors + MVVM",
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Real-time via StateFlow + collectAsState",
-            fontSize = 13.sp,
-            color = androidx.compose.ui.graphics.Color.Gray
+            text = "SensorTracker → ViewModel → collectAsState()",
+            fontSize = 11.sp,
+            color = Color.Gray,
+            textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
-        // Card แสดงค่าแต่ละแกน
+        // ─── Card แสดงค่าเซ็นเซอร์ ───
         Card(
-            modifier = Modifier.padding(8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
-                AxisRow(label = "X", value = sensorData[0])
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(
+                    text = "Accelerometer",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Divider()
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // แสดงค่าแต่ละแกน — sensorData[0]=X, [1]=Y, [2]=Z
+                SensorAxisRow(axis = "X", value = sensorData[0], color = Color(0xFFE53935))
                 Spacer(modifier = Modifier.height(8.dp))
-                AxisRow(label = "Y", value = sensorData[1])
+                SensorAxisRow(axis = "Y", value = sensorData[1], color = Color(0xFF43A047))
                 Spacer(modifier = Modifier.height(8.dp))
-                AxisRow(label = "Z", value = sensorData[2])
+                SensorAxisRow(axis = "Z", value = sensorData[2], color = Color(0xFF1E88E5))
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "หน่วย: m/s²", fontSize = 14.sp, color = androidx.compose.ui.graphics.Color.Gray)
+        Text(
+            text = "หน่วย: m/s²  •  อัปเดตทุก ~60ms",
+            fontSize = 12.sp,
+            color = Color.Gray
+        )
     }
 }
 
-// Composable ย่อยสำหรับแสดงค่าแต่ละแกน
+/** Composable ย่อย: แสดงชื่อแกนและค่าตัวเลข */
 @Composable
-fun AxisRow(label: String, value: Float) {
-    Text(
-        text = "แกน $label :  ${String.format("%.4f", value)}  m/s²",
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Medium
-    )
+fun SensorAxisRow(axis: String, value: Float, color: Color) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "แกน $axis",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            color = color
+        )
+        Text(
+            // แสดงค่าทศนิยม 4 ตำแหน่ง พร้อม padding หน้าเพื่อให้ตัวเลขไม่กระโดด
+            text = "${String.format("%+.4f", value)} m/s²",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+        )
+    }
 }
