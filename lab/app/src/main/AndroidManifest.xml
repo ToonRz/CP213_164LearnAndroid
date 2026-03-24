@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Task 1: Gallery — Android 13+ ใช้ READ_MEDIA_IMAGES, เวอร์ชันเก่าใช้ READ_EXTERNAL_STORAGE -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
         android:allowBackup="true"
@@ -65,6 +70,12 @@
             android:name=".SensorActivity"
             android:exported="false"
             android:label="Sensor Task"
+            android:theme="@style/Theme._164_LabLearnAndriod" />
+        <!-- Task 1 (Lab ใหม่): Gallery + Permission Flow -->
+        <activity
+            android:name=".GalleryActivity"
+            android:exported="false"
+            android:label="Gallery Task"
             android:theme="@style/Theme._164_LabLearnAndriod" />
     </application>
 
