@@ -19,24 +19,29 @@ class SensorViewModel(application: Application) : AndroidViewModel(application) 
 
     // Repository Layer — SensorTracker เป็นตัวคุยกับ Hardware โดยตรง
     private val sensorTracker = SensorTracker(application)
+    private val locationTracker = LocationTracker(application)
 
     // Expose StateFlow ของ Tracker ออกไปให้ UI ใช้
     // UI จะเห็นแค่ StateFlow (read-only) ไม่สามารถแก้ค่าได้โดยตรง
     val sensorData: StateFlow<FloatArray> = sensorTracker.sensorData
+    val locationData: StateFlow<LocationData?> = locationTracker.locationData
 
-    /** เรียกเมื่อหน้าจอเปิด → Delegate ไปที่ SensorTracker */
+    /** เรียกเมื่อหน้าจอเปิด → Delegate ไปที่ SensorTracker & LocationTracker */
     fun startListening() {
         sensorTracker.start()
+        locationTracker.start()
     }
 
-    /** เรียกเมื่อหน้าจอปิด → Delegate ไปที่ SensorTracker */
+    /** เรียกเมื่อหน้าจอปิด → Delegate ไปที่ SensorTracker & LocationTracker */
     fun stopListening() {
         sensorTracker.stop()
+        locationTracker.stop()
     }
 
     /** ถูกเรียกอัตโนมัติเมื่อ ViewModel ถูกทำลาย → หยุดเซ็นเซอร์ */
     override fun onCleared() {
         super.onCleared()
         sensorTracker.stop()
+        locationTracker.stop()
     }
 }
