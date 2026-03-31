@@ -72,11 +72,7 @@
             android:label="Sensor Task"
             android:theme="@style/Theme._164_LabLearnAndriod" />
         <!-- Task 1 (Lab ใหม่): Gallery + Permission Flow -->
-        <activity
-            android:name=".GalleryActivity"
-            android:exported="false"
-            android:label="Gallery Task"
-            android:theme="@style/Theme._164_LabLearnAndriod" />
+        
     </application>
 
 </manifest>
