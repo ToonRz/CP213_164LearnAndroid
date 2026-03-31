@@ -39,5 +39,3 @@ object PokemonNetwork {
             .create(PokemonApiService::class.java)
     }
 }
-
-annotation class PokemonApi : PokemonApiService
