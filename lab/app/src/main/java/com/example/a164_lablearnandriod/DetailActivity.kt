@@ -31,6 +31,7 @@ class DetailActivity : ComponentActivity() {
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                                 overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.stay, R.anim.slide_down)
                             } else {
+                                @Suppress("DEPRECATION")
                                 overridePendingTransition(R.anim.stay, R.anim.slide_down)
                             }
                         }
