@@ -21,12 +21,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Adb
+import androidx.compose.material.icons.filled.Animation
+import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.Brush
 import androidx.compose.material.icons.filled.Camera
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material.icons.filled.Sensors
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Timeline
+import androidx.compose.material.icons.filled.TouchApp
+import androidx.compose.material.icons.filled.VerticalAlignBottom
+import androidx.compose.material.icons.filled.Web
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -114,11 +124,37 @@ class MenuActivity : ComponentActivity() {
                             { startActivity(Intent(this@MenuActivity, GalleryActivity::class.java)) },
                     Triple("Sensors (Task 2/3)", "MVVM + Accelerometer", Icons.Filled.Sensors) to
                             { startActivity(Intent(this@MenuActivity, SensorActivity::class.java)) },
+                    
+                    // --- New Advanced Missions ---
+                    Triple("Mission 1", "Animations & Motion", Icons.Filled.Animation) to
+                            { startActivity(Intent(this@MenuActivity, AnimationActivity::class.java)) },
+                    Triple("Mission 2", "Complex Lists & Pagination", Icons.Filled.List) to
+                            { startActivity(Intent(this@MenuActivity, Part2Activity::class.java)) },
+                    Triple("Mission 3", "Canvas Graphics & Effects", Icons.Filled.Brush) to
+                            { startActivity(Intent(this@MenuActivity, CanvasActivity::class.java)) },
+                    Triple("Mission 4", "Advanced Gestures", Icons.Filled.TouchApp) to
+                            { startActivity(Intent(this@MenuActivity, GestureActivity::class.java)) },
+                    Triple("Mission 5", "Compose Side Effects", Icons.Filled.Bolt) to
+                            { startActivity(Intent(this@MenuActivity, SideEffectActivity::class.java)) },
+                    Triple("Mission 6", "WebView (View Interop)", Icons.Filled.Web) to
+                            { startActivity(Intent(this@MenuActivity, WebViewActivity::class.java)) },
+                    Triple("Mission 7", "Activity Transitions", Icons.Filled.OpenInNew) to
+                            { startActivity(Intent(this@MenuActivity, TransitionActivity::class.java)) },
+                    Triple("Mission 8", "Adaptive Layouts", Icons.Filled.Adb) to
+                            { startActivity(Intent(this@MenuActivity, AdaptiveLayoutActivity::class.java)) },
+                    Triple("Extra", "Collapsing Toolbar", Icons.Filled.VerticalAlignBottom) to
+                            { startActivity(Intent(this@MenuActivity, CollapsingToolbarActivity::class.java)) },
                 )
 
-                menus.forEachIndexed { index, (info, action) ->
-                    MenuCard(title = info.first, subtitle = info.second, icon = info.third, onClick = action)
-                    if (index < menus.size - 1) Spacer(modifier = Modifier.height(12.dp))
+                androidx.compose.foundation.lazy.LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(bottom = 32.dp)
+                ) {
+                    items(menus.size) { index ->
+                        val (info, action) = menus[index]
+                        MenuCard(title = info.first, subtitle = info.second, icon = info.third, onClick = action)
+                    }
                 }
             }
         }

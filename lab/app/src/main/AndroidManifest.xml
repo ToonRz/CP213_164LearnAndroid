@@ -77,6 +77,77 @@
             android:exported="false"
             android:label="Gallery Task"
             android:theme="@style/Theme._164_LabLearnAndriod" />
+
+        <!-- Mission 1: Animation -->
+        <activity
+            android:name=".AnimationActivity"
+            android:exported="false"
+            android:label="Animation &amp; Motion" />
+
+        <!-- Mission 2: Complex Lists & Pagination -->
+        <activity
+            android:name=".Part2Activity"
+            android:exported="false"
+            android:label="Part 2: Complex Lists" />
+
+        <!-- Mission 3: Graphics & Canvas -->
+        <activity
+            android:name=".CanvasActivity"
+            android:exported="false"
+            android:label="Canvas Graphics" />
+
+        <!-- Mission 4: Gestures -->
+        <activity
+            android:name=".GestureActivity"
+            android:exported="false"
+            android:label="Advanced Gestures" />
+
+        <!-- Mission 5: Side Effects -->
+        <activity
+            android:name=".SideEffectActivity"
+            android:exported="false"
+            android:label="Side Effects" />
+
+        <!-- Mission 6: View Interop -->
+        <activity
+            android:name=".WebViewActivity"
+            android:exported="false"
+            android:label="View Interoperability" />
+
+        <!-- Mission 7: Transitions -->
+        <activity
+            android:name=".TransitionActivity"
+            android:exported="false"
+            android:label="Activity Transitions" />
+        <activity
+            android:name=".DetailActivity"
+            android:exported="false"
+            android:label="Detail Screen" />
+
+        <!-- Mission 8: Adaptive Layouts -->
+        <activity
+            android:name=".AdaptiveLayoutActivity"
+            android:exported="false"
+            android:label="Adaptive Layout" />
+
+        <!-- Mission 9: Collapsing Toolbar -->
+        <activity
+            android:name=".CollapsingToolbarActivity"
+            android:exported="false"
+            android:label="Collapsing Toolbar" />
+
+        <!-- Mission 10: App Widget -->
+        <receiver
+            android:name=".ExampleAppWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/example_app_widget_info" />
+        </receiver>
+
     </application>
 
 </manifest>
