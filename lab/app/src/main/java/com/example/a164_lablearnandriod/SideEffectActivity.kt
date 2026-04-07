@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.a164_lablearnandriod.ui.theme._164_LabLearnAndriodTheme
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ class SideEffectViewModel : ViewModel() {
     val errorFlow = _errorFlow.asSharedFlow()
 
     fun triggerError() {
-        kotlinx.coroutines.GlobalScope.launch {
+        viewModelScope.launch {
             _errorFlow.emit("Something went wrong! (Error from ViewModel)")
         }
     }

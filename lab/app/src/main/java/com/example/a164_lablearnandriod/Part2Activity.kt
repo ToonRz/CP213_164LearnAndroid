@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.a164_lablearnandriod.ui.theme._164_LabLearnAndriodTheme
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -42,7 +43,7 @@ class ContactViewModel : ViewModel() {
         val newItems = ('A'..'Z').map { char -> "Contact $char - ${contactList.size / 26 + 1}" }
         
         // Simulate delay
-        kotlinx.coroutines.GlobalScope.launch {
+        viewModelScope.launch {
             delay(2000)
             contactList.addAll(newItems)
             isLoading = false

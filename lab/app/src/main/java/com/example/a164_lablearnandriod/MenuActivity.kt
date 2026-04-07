@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Adb
 import androidx.compose.material.icons.filled.Animation
 import androidx.compose.material.icons.filled.Bolt
@@ -128,7 +130,7 @@ class MenuActivity : ComponentActivity() {
                     // --- New Advanced Missions ---
                     Triple("Mission 1", "Animations & Motion", Icons.Filled.Animation) to
                             { startActivity(Intent(this@MenuActivity, AnimationActivity::class.java)) },
-                    Triple("Mission 2", "Complex Lists & Pagination", Icons.Filled.List) to
+                    Triple("Mission 2", "Complex Lists & Pagination", Icons.AutoMirrored.Filled.List) to
                             { startActivity(Intent(this@MenuActivity, Part2Activity::class.java)) },
                     Triple("Mission 3", "Canvas Graphics & Effects", Icons.Filled.Brush) to
                             { startActivity(Intent(this@MenuActivity, CanvasActivity::class.java)) },
@@ -138,7 +140,7 @@ class MenuActivity : ComponentActivity() {
                             { startActivity(Intent(this@MenuActivity, SideEffectActivity::class.java)) },
                     Triple("Mission 6", "WebView (View Interop)", Icons.Filled.Web) to
                             { startActivity(Intent(this@MenuActivity, WebViewActivity::class.java)) },
-                    Triple("Mission 7", "Activity Transitions", Icons.Filled.OpenInNew) to
+                    Triple("Mission 7", "Activity Transitions", Icons.AutoMirrored.Filled.OpenInNew) to
                             { startActivity(Intent(this@MenuActivity, TransitionActivity::class.java)) },
                     Triple("Mission 8", "Adaptive Layouts", Icons.Filled.Adb) to
                             { startActivity(Intent(this@MenuActivity, AdaptiveLayoutActivity::class.java)) },
