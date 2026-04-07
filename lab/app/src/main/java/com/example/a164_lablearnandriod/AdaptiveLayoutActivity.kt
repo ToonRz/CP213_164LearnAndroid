@@ -42,7 +42,7 @@ fun AdaptiveProfileScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(32.dp),
-                verticalAlignment = Alignment.CenterHorizontally,
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(32.dp)
             ) {
                 ProfileImage(Modifier.size(200.dp))
